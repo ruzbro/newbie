@@ -1,0 +1,8 @@
+pandas
+plotly
+ipython
+jupyter
+openpyxl
+sqlalchemy
+psycopg2-binary
+nbformat 
