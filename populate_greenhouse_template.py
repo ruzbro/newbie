@@ -1,13 +1,22 @@
-
 import pandas as pd
 import numpy as np
+import argparse
 import re
 
-def populate_gh3_template():
-    template_path = "/workspaces/newbie/data/GH3 Template - data gh3.csv"
+def populate_greenhouse_template(greenhouse_id):
+    # Standardize greenhouse_id for file paths and sheet names
+    gh_lower = greenhouse_id.lower()
+    
+    template_path = f"/workspaces/newbie/data/{greenhouse_id} Template - data {gh_lower}.csv"
     excel_path = "/workspaces/newbie/data/Hydronomics Monitoring NEW 2025.xlsx"
-    sheet_name = 'Hydronomics GH3'
-    output_filename = "/workspaces/newbie/data/Hydronomics Data gh3.csv"
+    
+    # Handle sheet name for Nursery specifically, otherwise use Hydronomics GHX
+    if greenhouse_id == 'Nursery':
+        sheet_name = 'Hydronomics NURSERY'
+        output_filename = f"/workspaces/newbie/data/Hydronomics Data nursery.csv"
+    else:
+        sheet_name = f'Hydronomics {greenhouse_id}'
+        output_filename = f"/workspaces/newbie/data/Hydronomics Data {gh_lower}.csv"
 
     print(f"Populating template for {sheet_name}...")
 
@@ -25,7 +34,7 @@ def populate_gh3_template():
         week_to_col_map = {int(week_num): col_idx + 2 for col_idx, week_num in enumerate(excel_week_numbers_series) if pd.notna(week_num) and isinstance(week_num, (int, float))}
 
         # Define the exact row mappings for each metric_code and its starting DAILY data row
-        # (metric_code, daily_data_start_row_index_in_pandas)
+        # This mapping is consistent across GH2, GH3, GH4. Assuming it's the same for GH1 and Nursery.
         metric_daily_data_start_rows = {
             'sys_ec': 20, # Excel row 21 (Mon for EC)
             'sys_ph': 28, # Excel row 29 (Mon for PH)
@@ -82,4 +91,7 @@ def populate_gh3_template():
         print(f"An error occurred: {e}")
 
 if __name__ == "__main__":
-    populate_gh3_template()
+    parser = argparse.ArgumentParser(description="Populate a greenhouse data template.")
+    parser.add_argument('greenhouse_id', type=str, help='The ID of the greenhouse (e.g., GH1, GH2, GH3, GH4, Nursery)')
+    args = parser.parse_args()
+    populate_greenhouse_template(args.greenhouse_id)
