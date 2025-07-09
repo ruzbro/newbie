@@ -54,7 +54,7 @@ ax.set_xticklabels(week_labels.reindex(weekly_harvest.index).values, rotation=45
 fig.tight_layout()
 
 # Save the plot
-plot_filename = 'greenhouse_weekly_harvest_past_only.png'
+plot_filename = './analysis/charts/greenhouse_weekly_harvest_past_only.png'
 plt.savefig(plot_filename)
 print(f"Plot saved to {plot_filename}")
 
