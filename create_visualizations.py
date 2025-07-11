@@ -7,7 +7,11 @@ from plotly.subplots import make_subplots
 # Load the datasets
 revenue_df = pd.read_csv('data/Revenue by Greenhouse by Crop.csv')
 crop_calendar_df = pd.read_csv('data/crop calendar weeks 2025-08 to 2025-32.csv')
-hydroponics_df = pd.read_csv('data/Hydronomics Data gh1gh3.csv')
+hydroponics_df = pd.read_csv('data/Hydronomics Data Merged.csv')
+
+# Filter for valid data points only (where status is NULL/NaN)
+hydroponics_df = hydroponics_df[pd.isna(hydroponics_df['status'])].copy()
+
 
 # --- Clean and Process Data ---
 

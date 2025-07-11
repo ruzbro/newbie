@@ -33,3 +33,38 @@ The following ranges are used to determine the `normal` and `out-of-range` statu
 ## How to Use This Information
 
 Users can filter the `Hydronomics Data Merged.csv` file by the `status` column to quickly identify data points that need attention. For example, filtering for `out-of-range` values will show critical errors, while `low-ec-to-verify` will highlight data that might be unusual but requires expert judgment.
+
+## Macro-Level Farm Metrics Analysis
+
+The `macro-farm-metrics-analysis.py` script provides a high-level analysis of temperature metrics across different greenhouses.
+
+### Features
+
+*   **Analyzes Clean Data**: The script uses only clean data from `Hydronomics Data Merged.csv` (where `status` is `NULL`).
+*   **Weekly Median Calculation**: It calculates the median weekly value for each temperature metric by greenhouse.
+*   **Identifies Extremes**: The script identifies which greenhouse had the highest and lowest median temperature values for each metric.
+*   **Pattern Analysis**: It analyzes and reports on consistent temperature differences between greenhouses.
+
+### How to Run the Analysis in IPython
+
+You can run the analysis in an IPython interactive session.
+
+1.  **Start IPython**:
+    ```bash
+    ipython
+    ```
+
+2.  **Import the function**:
+    ```python
+    from macro_farm_metrics_analysis import analyze_temperature_patterns
+    ```
+
+3.  **Run the analysis**:
+    *   To run the analysis for all greenhouses and all temperature metrics:
+        ```python
+        analyze_temperature_patterns()
+        ```
+    *   To run the analysis for specific greenhouses and metrics:
+        ```python
+        analyze_temperature_patterns(target_greenhouses=['GH1', 'GH3'], target_metrics=['sys_gh_temp'])
+        ```
